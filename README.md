@@ -15,3 +15,13 @@ These algorithms are not optimized for speed or space. They are primarily design
 Building
 ---
 The source code for each algorithm will come in a pair of a source code file and a header file. There should be no inter-header file dependencies, no additional libraries, no platform-specific header files, or any other complicating matters. Compiling them should be as easy as adding the relevent source code to the project.
+
+CMake
+---
+Example: build Debug on MSVC：
+```shell
+mkdir build
+cd build
+cmake .. -G "Visual Studio 17 2022" -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Debug
+cmake --build . --config Debug --target install -j8
+```

@@ -41,10 +41,17 @@ target_include_directories(crypto_algorithms_static PUBLIC ${CMAKE_CURRENT_SOURC
 if(${BUILD_CRYPTO_ALGORITHMS_TEST})
     add_executable(crypto_algorithms_test aes_test.c)
     target_link_libraries(crypto_algorithms_test PRIVATE crypto_algorithms_static)
+
+    # 安装目标
+    install(TARGETS crypto_algorithms_test
+        ARCHIVE DESTINATION lib
+        LIBRARY DESTINATION lib
+        RUNTIME DESTINATION bin
+    )
 endif()
 
 # 安装目标
-install(TARGETS crypto_algorithms_static crypto_algorithms_test
+install(TARGETS crypto_algorithms_static
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin

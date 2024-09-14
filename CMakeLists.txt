@@ -18,6 +18,8 @@ else()
     endif()
 endif()
 
+message("CMAKE_INSTALL_PREFIX: " ${CMAKE_INSTALL_PREFIX})
+
 # 设置源文件列表
 set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/aes.c
     ${CMAKE_CURRENT_SOURCE_DIR}/arcfour.c
@@ -33,32 +35,20 @@ set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/aes.c
 
 file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 
-# 根据 BUILD_SHARED_LIBS 决定库类型
-if(BUILD_SHARED_LIBS)
-    set(LIB_TYPE SHARED)
-else()
-    set(LIB_TYPE STATIC)
+add_library(crypto_algorithms_static STATIC ${SOURCES})
+target_include_directories(crypto_algorithms_static PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+if(${BUILD_CRYPTO_ALGORITHMS_TEST})
+    add_executable(crypto_algorithms_test aes_test.c)
+    target_link_libraries(crypto_algorithms_test PRIVATE crypto_algorithms_static)
 endif()
 
-# 添加库
-add_library(crypto_algorithms ${LIB_TYPE} ${SOURCES})
-
-# 设置库的包含目录
-target_include_directories(crypto_algorithms PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-
 # 安装目标
-install(TARGETS crypto_algorithms
+install(TARGETS crypto_algorithms_static crypto_algorithms_test
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
 )
-
-if(WIN32 AND ${CMAKE_BUILD_TYPE} MATCHES "Debug")
-    install(FILES $<TARGET_PDB_FILE:crypto_algorithms>
-        DESTINATION bin
-        CONFIGURATIONS Debug
-    )
-endif()
 
 # 安装头文件
 install(FILES ${HEADERS} DESTINATION include/crypto_algorithms)

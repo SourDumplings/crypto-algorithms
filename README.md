@@ -22,6 +22,12 @@ Example: build Debug on MSVC：
 ```shell
 mkdir build
 cd build
-cmake .. -G "Visual Studio 17 2022" -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Debug
+cmake .. -G "Visual Studio 17 2022" -DBUILD_CRYPTO_ALGORITHMS_TEST=ON
 cmake --build . --config Debug --target install -j8
+```
+
+Test
+---
+```
+./dist/crypto_algorithms_test.exe
 ```

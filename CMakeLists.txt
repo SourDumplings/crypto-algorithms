@@ -61,4 +61,4 @@ if(WIN32 AND ${CMAKE_BUILD_TYPE} MATCHES "Debug")
 endif()
 
 # 安装头文件
-install(FILES ${HEADERS} DESTINATION include)
+install(FILES ${HEADERS} DESTINATION include/crypto_algorithms)

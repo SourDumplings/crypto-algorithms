@@ -57,5 +57,11 @@ install(TARGETS crypto_algorithms_static
     RUNTIME DESTINATION bin
 )
 
+if (MSVC AND ${CMAKE_BUILD_TYPE} MATCHES "Debug")
+	# Install .pdb files if using MSVC
+	message("Installing pdb file...")
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Debug/crypto_algorithms_static.pdb DESTINATION lib${LIB_SUFFIX} CONFIGURATIONS Debug)
+endif()
+
 # 安装头文件
 install(FILES ${HEADERS} DESTINATION include/crypto_algorithms)
